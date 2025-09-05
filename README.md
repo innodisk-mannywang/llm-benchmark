@@ -1,5 +1,7 @@
 # llm-benchmark
 ### 🚀 Async & OpenAI-Compatible LLM Benchmark
+**Version: v0.1**
+
 A high-performance benchmarking tool for Large Language Models supporting async execution and OpenAI API format.
 Easily measure latency, throughput, and token speed with concurrent requests and streaming response support. Perfect for evaluating both cloud and self-hosted models.
 
@@ -23,7 +25,9 @@ Easily measure latency, throughput, and token speed with concurrent requests and
 * Repository
     * clone the repository
       ```bash
-      git clone https://github.com/TsoTing-Li/llm-benchmark.git
+      git clone https://github.com/innodisk-mannywang/llm-benchmark.git
+      cd llm-benchmark
+      git checkout v0.1
       ```
 ## 🛠️ Build environment in docker
 ```bash
@@ -70,7 +74,7 @@ docker run -it --rm --name llm-benchmark-tool --gpus all --network=host -v $(pwd
 ### Console Output (CV Style)
 ```
 ================================================================================
-🔍 增強版 LLM Benchmark 報告
+🔍 增強版 LLM Benchmark 報告 (v0.1)
 ================================================================================
 
 📊 測試配置:
@@ -80,6 +84,7 @@ docker run -it --rm --name llm-benchmark-tool --gpus all --network=host -v $(pwd
   • 併發連線數: 16
   • 執行時間: 3 秒
   • Provider: Innodisk IPA Dept.
+  • 版本: v0.1
 
 ⚡ 性能指標:
   • 總請求速率: 18.51 req/s (requests per second)
@@ -107,6 +112,7 @@ docker run -it --rm --name llm-benchmark-tool --gpus all --network=host -v $(pwd
 ```json
 {
   "timestamp": "2025-09-05T01:34:24.349284",
+  "version": "v0.1",
   "configuration": {
     "model": "openai/gpt-oss-20b",
     "dataset": "ShareGPT_tiny.json",
@@ -167,3 +173,13 @@ docker run -it --rm --name llm-benchmark-tool --gpus all --network=host -v $(pwd
 - **tokens**: Number of tokens generated per request
 - **requests**: Total number of requests sent
 - **successful requests**: Number of successfully completed requests
+
+## 📋 Version History
+
+### v0.1 (2025-09-05)
+- Initial release
+- Real-time resource monitoring (CPU, Memory, GPU)
+- CV-style console output with detailed metrics
+- Concurrent testing support
+- OpenAI-compatible API endpoint support
+- Docker support with GPU acceleration
