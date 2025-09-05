@@ -5,6 +5,9 @@ from anyio import open_file
 from type.metrics import TTFT, Latency, Token
 from type.report import Report
 
+# Version constant
+VERSION = "v0.1"
+
 
 def generate_test_report(
     model: str,
@@ -54,6 +57,7 @@ def generate_test_report(
 
 async def save_report_as_file(data: Report, save_path: str) -> None:
     report_content = {
+        "Version": VERSION,
         "Model": data.model,
         "Limit output tokens": data.max_tokens,
         "Number of concurrency": data.num_concurrency,
@@ -127,6 +131,7 @@ def generate_cv_style_report(
 
     report: dict = {
         "timestamp": __import__("datetime").datetime.now().isoformat(),
+        "version": VERSION,
         "configuration": {
             "model": model,
             "dataset": dataset,
@@ -196,7 +201,7 @@ async def save_cv_style_report_as_file(data: dict, save_path: str) -> None:
 # ===== Console pretty print (CV-style) =====
 def print_cv_style_report(report: dict) -> None:
     print("\n" + "=" * 80)
-    print("🔍 增強版 LLM Benchmark 報告")
+    print("🔍 增強版 LLM Benchmark 報告 (v0.1)")
     print("=" * 80)
 
     cfg = report.get("configuration", {})
@@ -216,6 +221,7 @@ def print_cv_style_report(report: dict) -> None:
     print(f"  • 併發連線數: {cfg.get('concurrency', 1)}")
     print(f"  • 執行時間: {cfg.get('seconds', 0)} 秒")
     print(f"  • Provider: {cfg.get('provider', 'Innodisk IPA Dept.')}")
+    print(f"  • 版本: {report.get('version', VERSION)}")
     
     rps_total = total_requests / total_runtime if total_runtime > 0 else 0
     rps_per_connection = rps_total / concurrency if concurrency > 0 else 0
