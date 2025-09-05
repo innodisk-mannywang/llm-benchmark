@@ -11,6 +11,11 @@ requires-python = ">=3.8"
 
 dependencies = ["anyio==3.7.1", "httpx==0.27.0", "orjson==3.10.15", "psutil==5.9.8", "pynvml==11.5.0"]
 
+[project.urls]
+Homepage = "https://github.com/innodisk-mannywang/llm-benchmark"
+Repository = "https://github.com/innodisk-mannywang/llm-benchmark"
+Issues = "https://github.com/innodisk-mannywang/llm-benchmark/issues"
+
 [tool.ruff]
 select = [
     "E",  # pycodestyle errors
