@@ -9,7 +9,7 @@ MODEL_NAME="openai/gpt-oss-20b"
 PORT=8000
 MAX_MODEL_LEN=8192
 GPUS="all"
-HF_TOKEN_DEFAULT=""
+HF_TOKEN_DEFAULT="${HUGGING_FACE_HUB_TOKEN:-}"
 PULL_IMAGE=true
 
 print_usage() {
