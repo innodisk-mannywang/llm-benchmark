@@ -230,11 +230,10 @@ def print_cv_style_report(report: dict) -> None:
     thr = perf.get("throughput", {})
 
     print("\n⚡ 性能指標:")
-    print(f"  • 總請求速率: {rps_total:.2f} req/s")
-    print(f"  • 每連線速率: {rps_per_connection:.2f} req/s")
-    print(f"  • 平均延遲: {lat.get('average', 0):.2f} ms")
-    print(f"  • 延遲範圍: {lat.get('min', 0):.2f} - {lat.get('max', 0):.2f} ms")
-    print(f"  • 總吞吐量: {thr.get('total', 0):.2f} req/s")
+    print(f"  • 總請求速率: {rps_total:.2f} req/s (requests per second)")
+    print(f"  • 每連線速率: {rps_per_connection:.2f} req/s (requests per second per connection)")
+    print(f"  • 平均延遲: {lat.get('average', 0):.2f} ms (milliseconds)")
+    print(f"  • 延遲範圍: {lat.get('min', 0):.2f} - {lat.get('max', 0):.2f} ms (milliseconds)")
     
     # 添加 TTFT 指標（如果存在）
     ttft = report.get("ttft_ms", {})
