@@ -6,7 +6,7 @@ from type.metrics import TTFT, Latency, Token
 from type.report import Report
 
 # Version constant
-VERSION = "v0.1"
+VERSION = "v1.0"
 
 
 def generate_test_report(
@@ -48,7 +48,7 @@ def generate_test_report(
         dataset=dataset if dataset else prompt,
         successful_requests=len(latency_list),
         request_per_sec=round(requests / duration, 2),
-        throughput_token=round(sum(token_list) / sum(latency_list), 2),
+        throughput_token=round(sum(token_list) / duration, 2),
         ttft=ttft,
         latency=latency,
         token=token,
@@ -110,6 +110,10 @@ def generate_cv_style_report(
     avg_latency_ms = avg_latency_s * 1000.0
     rps_total = (total_requests / duration_s) if duration_s > 0 else 0.0
     rps_per_channel = rps_total / max(concurrency, 1)
+    
+    # Token throughput calculation
+    total_tokens = sum(token_list) if token_list else 0
+    token_throughput = total_tokens / duration_s if duration_s > 0 else 0.0
 
     # Use actual resource stats if available, otherwise use zeros for compatibility
     if resource_stats:
@@ -201,7 +205,7 @@ async def save_cv_style_report_as_file(data: dict, save_path: str) -> None:
 # ===== Console pretty print (CV-style) =====
 def print_cv_style_report(report: dict) -> None:
     print("\n" + "=" * 80)
-    print("🔍 增強版 LLM Benchmark 報告 (v0.1)")
+    print("🔍 Innodisk LLM Benchmark 測試報告 v1.0")
     print("=" * 80)
 
     cfg = report.get("configuration", {})
@@ -235,6 +239,12 @@ def print_cv_style_report(report: dict) -> None:
     print(f"  • 平均延遲: {lat.get('average', 0):.2f} ms (milliseconds)")
     print(f"  • 延遲範圍: {lat.get('min', 0):.2f} - {lat.get('max', 0):.2f} ms (milliseconds)")
     print(f"  • 總吞吐量: {thr.get('total', 0):.2f} req/s (requests per second)")
+    
+    # 計算並顯示token吞吐量
+    avg_tokens_per_response = det.get("avg_tokens_per_response", {}).get("average", 0)
+    token_throughput = avg_tokens_per_response * rps_total if rps_total > 0 else 0
+    print(f"  • Token吞吐量: {token_throughput:.2f} tok/s (tokens per second)")
+    print(f"  • 平均回應tokens: {avg_tokens_per_response:.2f} (tokens per request)")
     
     # 添加 TTFT 指標（如果存在）
     ttft = report.get("ttft_ms", {})
